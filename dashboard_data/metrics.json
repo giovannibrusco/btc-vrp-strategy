@@ -1,0 +1,514 @@
+{
+  "metrics": {
+    "vega_is": {
+      "total_return_pct": 36.990661624924485,
+      "total_pnl": 36990.661624924534,
+      "n_trades": 35,
+      "win_rate": 65.71428571428571,
+      "mean_pnl": 1056.8760464264153,
+      "median_pnl": 515.6429769730221,
+      "sharpe": 1.7397383892542553,
+      "max_drawdown_pct": -18.43903944701901,
+      "avg_holding_days": 22.885714285714286,
+      "option_pnl_total": 30026.36529887497,
+      "hedge_pnl_total": 10447.183071558824,
+      "hedge_txn_cost_total": 2135.4274918927217,
+      "option_txn_cost_total": 852.1997713500056,
+      "tail_hedge_cost_total": 495.25948226653423,
+      "exit_reasons": {
+        "profit_target": 29,
+        "dte_exit": 5,
+        "end_of_data": 1
+      },
+      "trades_per_year": 15.26284348864994,
+      "initial_equity": 100000.0,
+      "final_equity": 136990.66162492448,
+      "key": "vega_is",
+      "trade_level_dd": -3.0785884887817154
+    },
+    "vega_oos": {
+      "total_return_pct": 14.257547528424208,
+      "total_pnl": 14257.547528424215,
+      "n_trades": 10,
+      "win_rate": 60.0,
+      "mean_pnl": 1425.7547528424216,
+      "median_pnl": 398.6293356261214,
+      "sharpe": 1.5250949682298376,
+      "max_drawdown_pct": -4.4962625400230465,
+      "avg_holding_days": 35.5,
+      "option_pnl_total": 2971.793762205246,
+      "hedge_pnl_total": 12276.03812962277,
+      "hedge_txn_cost_total": 616.473734425772,
+      "option_txn_cost_total": 156.57020198572067,
+      "tail_hedge_cost_total": 217.24042699230654,
+      "exit_reasons": {
+        "profit_target": 8,
+        "dte_exit": 1,
+        "end_of_data": 1
+      },
+      "trades_per_year": 10.027472527472527,
+      "initial_equity": 100000.0,
+      "final_equity": 114257.54752842421,
+      "key": "vega_oos",
+      "trade_level_dd": -0.6686089033432244
+    },
+    "cons_is": {
+      "n_trades": 35,
+      "sharpe": 1.751570968477266,
+      "total_return_pct": 6.924943982461662,
+      "max_drawdown_pct": -3.890563568701502,
+      "win_rate": 65.71428571428571,
+      "mean_pnl": 197.85554235604718,
+      "trades_per_year": 15.26284348864994,
+      "initial_equity": 100000,
+      "final_equity": 106924.94398246166,
+      "key": "cons_is",
+      "vega_initial": 9.102494083378845,
+      "risk_per_trade": 0.01,
+      "buffer_multiplier": 2.0,
+      "option_pnl_total": 5723.52364806865,
+      "hedge_pnl_total": 1856.77583774849,
+      "hedge_txn_cost_total": 401.7955332998164,
+      "option_txn_cost_total": 159.75712237312197,
+      "tail_hedge_cost_total": 93.80284768255089
+    },
+    "cons_oos": {
+      "n_trades": 10,
+      "sharpe": 1.5229413324662606,
+      "total_return_pct": 2.611360598574586,
+      "max_drawdown_pct": -0.8617954847842701,
+      "win_rate": 60.0,
+      "mean_pnl": 261.1360598574597,
+      "trades_per_year": 10.027472527472527,
+      "initial_equity": 100000,
+      "final_equity": 102611.3605985746,
+      "key": "cons_oos",
+      "vega_initial": 9.102494083378845,
+      "risk_per_trade": 0.01,
+      "buffer_multiplier": 2.0,
+      "option_pnl_total": 571.867996655175,
+      "hedge_pnl_total": 2222.245665286895,
+      "hedge_txn_cost_total": 113.78069720501387,
+      "option_txn_cost_total": 28.92984351807,
+      "tail_hedge_cost_total": 40.04252264438887
+    },
+    "mod_is": {
+      "n_trades": 35,
+      "sharpe": 1.7515709684772651,
+      "total_return_pct": 19.34789780833066,
+      "max_drawdown_pct": -10.262681974546553,
+      "win_rate": 65.71428571428571,
+      "mean_pnl": 552.7970802380189,
+      "trades_per_year": 15.26284348864994,
+      "initial_equity": 100000,
+      "final_equity": 119347.89780833066,
+      "key": "mod_is",
+      "vega_initial": 24.273317555676922,
+      "risk_per_trade": 0.02,
+      "buffer_multiplier": 1.5,
+      "option_pnl_total": 16466.569811090056,
+      "hedge_pnl_total": 4727.949588564499,
+      "hedge_txn_cost_total": 1132.0904340446582,
+      "option_txn_cost_total": 447.4276498370906,
+      "tail_hedge_cost_total": 267.1035074421481
+    },
+    "mod_oos": {
+      "n_trades": 10,
+      "sharpe": 1.5229413324662604,
+      "total_return_pct": 7.034008075386633,
+      "max_drawdown_pct": -2.2827089258567184,
+      "win_rate": 60.0,
+      "mean_pnl": 703.4008075386622,
+      "trades_per_year": 10.027472527472527,
+      "initial_equity": 100000,
+      "final_equity": 107034.00807538664,
+      "key": "mod_oos",
+      "vega_initial": 24.273317555676922,
+      "risk_per_trade": 0.02,
+      "buffer_multiplier": 1.5,
+      "option_pnl_total": 1663.8296100302457,
+      "hedge_pnl_total": 5868.65074052596,
+      "hedge_txn_cost_total": 310.40175375680917,
+      "option_txn_cost_total": 79.06718671158895,
+      "tail_hedge_cost_total": 109.0033347011841
+    },
+    "agg_is": {
+      "n_trades": 35,
+      "sharpe": 1.751570968477266,
+      "total_return_pct": 47.793143450304456,
+      "max_drawdown_pct": -22.59184504745666,
+      "win_rate": 65.71428571428571,
+      "mean_pnl": 1365.5183842944116,
+      "trades_per_year": 15.26284348864994,
+      "initial_equity": 100000,
+      "final_equity": 147793.14345030446,
+      "key": "agg_is",
+      "vega_initial": 54.614964500273075,
+      "risk_per_trade": 0.03,
+      "buffer_multiplier": 1.0,
+      "option_pnl_total": 43010.98343839691,
+      "hedge_pnl_total": 9421.591702870144,
+      "hedge_txn_cost_total": 2844.012273193535,
+      "option_txn_cost_total": 1111.1124860399489,
+      "tail_hedge_cost_total": 684.3069317291547
+    },
+    "agg_oos": {
+      "n_trades": 10,
+      "sharpe": 1.5229413324662613,
+      "total_return_pct": 16.145445018560967,
+      "max_drawdown_pct": -5.068116365801269,
+      "win_rate": 60.0,
+      "mean_pnl": 1614.5445018560972,
+      "trades_per_year": 10.027472527472527,
+      "initial_equity": 100000,
+      "final_equity": 116145.44501856097,
+      "key": "agg_oos",
+      "vega_initial": 54.614964500273075,
+      "risk_per_trade": 0.03,
+      "buffer_multiplier": 1.0,
+      "option_pnl_total": 4383.097110130708,
+      "hedge_pnl_total": 12935.226847699838,
+      "hedge_txn_cost_total": 730.6080947284788,
+      "option_txn_cost_total": 186.77055887498844,
+      "tail_hedge_cost_total": 255.50028566610192
+    }
+  },
+  "bootstrap": {
+    "vega_is": {
+      "sharpe": 1.7397383892542553,
+      "ci_95_lo": 0.7180920840837265,
+      "ci_95_hi": 2.741326214908239,
+      "p_gt_0": 0.9987,
+      "p_gt_1": 0.9272,
+      "p_gt_2": 0.3347
+    },
+    "vega_oos": {
+      "sharpe": 1.5250949682298376,
+      "ci_95_lo": 0.26519317350526583,
+      "ci_95_hi": 3.0896610878751893,
+      "p_gt_0": 0.9852,
+      "p_gt_1": 0.8961,
+      "p_gt_2": 0.3063
+    }
+  },
+  "ttest": {
+    "vega_is": {
+      "n": 35,
+      "mean_pnl": 1057.0,
+      "std_pnl": 2392.0,
+      "t_stat": 2.6143,
+      "p_two_sided": 0.01323,
+      "p_one_sided": 0.006615,
+      "significant_10pct": "True",
+      "significant_5pct": "True",
+      "significant_1pct": "True"
+    },
+    "vega_oos": {
+      "n": 10,
+      "mean_pnl": 1426.0,
+      "std_pnl": 3125.0,
+      "t_stat": 1.4428,
+      "p_two_sided": 0.182959,
+      "p_one_sided": 0.091479,
+      "significant_10pct": "True",
+      "significant_5pct": "False",
+      "significant_1pct": "False"
+    }
+  },
+  "regimes": {
+    "vega_is": {
+      "thresholds": [
+        50.666272010096044,
+        67.9392129206781
+      ],
+      "Low": {
+        "n": 10,
+        "win_rate": 70.0,
+        "mean_pnl": 569.0,
+        "total_pnl": 5692.0
+      },
+      "Mid": {
+        "n": 11,
+        "win_rate": 72.7,
+        "mean_pnl": 1352.0,
+        "total_pnl": 14870.0
+      },
+      "High": {
+        "n": 10,
+        "win_rate": 40.0,
+        "mean_pnl": 92.0,
+        "total_pnl": 921.0
+      }
+    },
+    "vega_oos": {
+      "thresholds": [
+        39.76954346171079,
+        47.199808665443896
+      ],
+      "Low": {
+        "n": 3,
+        "win_rate": 66.7,
+        "mean_pnl": 3361.0,
+        "total_pnl": 10082.0
+      },
+      "Mid": {
+        "n": 4,
+        "win_rate": 50.0,
+        "mean_pnl": 845.0,
+        "total_pnl": 3381.0
+      },
+      "High": {
+        "n": 3,
+        "win_rate": 66.7,
+        "mean_pnl": 265.0,
+        "total_pnl": 795.0
+      }
+    }
+  },
+  "trend_regimes": {
+    "vega_is": {
+      "Bull (>+10%)": {
+        "n": 10,
+        "win_rate": 70.0,
+        "mean_pnl": 693.0,
+        "total_pnl": 6931.0
+      },
+      "Sideways": {
+        "n": 7,
+        "win_rate": 57.1,
+        "mean_pnl": 959.0,
+        "total_pnl": 6716.0
+      },
+      "Bear (<-10%)": {
+        "n": 10,
+        "win_rate": 70.0,
+        "mean_pnl": 1081.0,
+        "total_pnl": 10809.0
+      }
+    },
+    "vega_oos": {
+      "Bull (>+10%)": {
+        "n": 4,
+        "win_rate": 100.0,
+        "mean_pnl": 3722.0,
+        "total_pnl": 14890.0
+      },
+      "Sideways": {
+        "n": 5,
+        "win_rate": 20.0,
+        "mean_pnl": -216.0,
+        "total_pnl": -1082.0
+      },
+      "Bear (<-10%)": {
+        "n": 1
+      }
+    }
+  },
+  "callput": {
+    "vega_is": {
+      "call": {
+        "n": 17,
+        "win_rate": 64.7,
+        "mean_pnl": 632.0,
+        "total_pnl": 10752.0,
+        "mean_entry_dte": 59.7
+      },
+      "put": {
+        "n": 18,
+        "win_rate": 66.7,
+        "mean_pnl": 1458.0,
+        "total_pnl": 26238.0,
+        "mean_entry_dte": 58.6
+      }
+    },
+    "vega_oos": {
+      "call": {
+        "n": 5,
+        "win_rate": 40.0,
+        "mean_pnl": 1843.0,
+        "total_pnl": 9214.0,
+        "mean_entry_dte": 82.4
+      },
+      "put": {
+        "n": 5,
+        "win_rate": 80.0,
+        "mean_pnl": 1009.0,
+        "total_pnl": 5043.0,
+        "mean_entry_dte": 69.5
+      }
+    }
+  },
+  "outliers": {
+    "vega_is": [
+      {
+        "removed": 0,
+        "n": 35,
+        "mean_pnl": 1057.0,
+        "sharpe": 1.74,
+        "win_rate": 65.7
+      },
+      {
+        "removed": 1,
+        "n": 34,
+        "mean_pnl": 864.0,
+        "sharpe": 1.59,
+        "win_rate": 64.7
+      },
+      {
+        "removed": 2,
+        "n": 33,
+        "mean_pnl": 684.0,
+        "sharpe": 1.44,
+        "win_rate": 63.6
+      },
+      {
+        "removed": 3,
+        "n": 32,
+        "mean_pnl": 509.0,
+        "sharpe": 1.25,
+        "win_rate": 62.5
+      },
+      {
+        "removed": 5,
+        "n": 30,
+        "mean_pnl": 201.0,
+        "sharpe": 0.72,
+        "win_rate": 60.0
+      }
+    ],
+    "vega_oos": [
+      {
+        "removed": 0,
+        "n": 10,
+        "mean_pnl": 1426.0,
+        "sharpe": 1.53,
+        "win_rate": 60.0
+      },
+      {
+        "removed": 1,
+        "n": 9,
+        "mean_pnl": 491.0,
+        "sharpe": 1.53,
+        "win_rate": 55.6
+      },
+      {
+        "removed": 2,
+        "n": 8,
+        "mean_pnl": 206.0,
+        "sharpe": 1.02,
+        "win_rate": 50.0
+      },
+      {
+        "removed": 3,
+        "n": 7,
+        "mean_pnl": 68.0,
+        "sharpe": 0.35,
+        "win_rate": 42.9
+      },
+      {
+        "removed": 5,
+        "n": 5,
+        "mean_pnl": -216.0,
+        "sharpe": -1.98,
+        "win_rate": 20.0
+      }
+    ]
+  },
+  "cost_stress": {
+    "vega_is": [
+      {
+        "multiplier": 1.0,
+        "mean_pnl": 1057.0,
+        "sharpe": 1.74
+      },
+      {
+        "multiplier": 1.5,
+        "mean_pnl": 1026.0,
+        "sharpe": 1.7
+      },
+      {
+        "multiplier": 2.0,
+        "mean_pnl": 996.0,
+        "sharpe": 1.65
+      },
+      {
+        "multiplier": 3.0,
+        "mean_pnl": 935.0,
+        "sharpe": 1.56
+      },
+      {
+        "multiplier": 5.0,
+        "mean_pnl": 813.0,
+        "sharpe": 1.38
+      },
+      {
+        "multiplier": 10.0,
+        "mean_pnl": 508.0,
+        "sharpe": 0.89
+      }
+    ],
+    "vega_oos": [
+      {
+        "multiplier": 1.0,
+        "mean_pnl": 1426.0,
+        "sharpe": 1.53
+      },
+      {
+        "multiplier": 1.5,
+        "mean_pnl": 1395.0,
+        "sharpe": 1.5
+      },
+      {
+        "multiplier": 2.0,
+        "mean_pnl": 1364.0,
+        "sharpe": 1.47
+      },
+      {
+        "multiplier": 3.0,
+        "mean_pnl": 1302.0,
+        "sharpe": 1.41
+      },
+      {
+        "multiplier": 5.0,
+        "mean_pnl": 1179.0,
+        "sharpe": 1.29
+      },
+      {
+        "multiplier": 10.0,
+        "mean_pnl": 871.0,
+        "sharpe": 0.99
+      }
+    ]
+  },
+  "risk_configs": {
+    "cons": {
+      "label": "Conservativa",
+      "risk_per_trade": 0.01,
+      "buffer": 2.0,
+      "vega_initial": 9.1
+    },
+    "mod": {
+      "label": "Moderata",
+      "risk_per_trade": 0.02,
+      "buffer": 1.5,
+      "vega_initial": 24.3
+    },
+    "agg": {
+      "label": "Aggressiva",
+      "risk_per_trade": 0.03,
+      "buffer": 1.0,
+      "vega_initial": 54.6
+    }
+  },
+  "config": {
+    "exit_dte": 5,
+    "profit_target": 0.5,
+    "base_vega_target": 50,
+    "worst_loss_per_vega": 54.93,
+    "initial_equity": 100000,
+    "is_start": "2021-06-01",
+    "is_end": "2023-09-30",
+    "oos_start": "2023-10-01",
+    "oos_end": "2024-09-30"
+  }
+}

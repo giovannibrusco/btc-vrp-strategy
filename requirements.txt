@@ -1,0 +1,8 @@
+numpy>=1.26
+pandas>=2.2
+scipy>=1.13
+streamlit>=1.32
+plotly>=5.22
+tqdm>=4.66
+PyYAML>=6.0
+python-dotenv>=0.21

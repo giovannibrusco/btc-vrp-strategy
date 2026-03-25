@@ -1,0 +1,30 @@
+# Data (too large for git)
+Data/
+SPY Options/
+
+# Runtime
+logs/
+data/
+output/
+Png/
+
+# Credentials
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Claude Code
+.claude/
