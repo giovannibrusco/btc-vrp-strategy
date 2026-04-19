@@ -6,7 +6,9 @@ SPY Options/
 logs/
 data/
 output/
+outputs/
 Png/
+Screenshots Dashboards/
 
 # Credentials
 .env

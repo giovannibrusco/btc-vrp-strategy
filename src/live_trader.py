@@ -118,14 +118,32 @@ def run_cycle(client: DeribitClient, executor: OrderExecutor,
         # Compute current DTE
         parts = pos["instrument"].split("-")
         try:
-            # Parse expiry from instrument name: BTC-26DEC25-100000-C
             expiry_str = parts[1]
-            # Deribit format: DDMMMYY
             expiry_dt = datetime.strptime(expiry_str, "%d%b%y").replace(
-                tzinfo=timezone.utc, hour=8)  # Deribit expires at 08:00 UTC
+                tzinfo=timezone.utc, hour=8)
             current_dte = (expiry_dt - datetime.now(timezone.utc)).total_seconds() / 86400
         except Exception:
-            current_dte = pos.get("entry_dte", 30) - 1  # rough fallback
+            current_dte = pos.get("entry_dte", 30) - 1
+
+        # ── Compute hedge PnL from quarterly price change ─
+        hedge_inst = pos.get("hedge_instrument")
+        if hedge_inst:
+            try:
+                hedge_ticker = client.get_ticker(hedge_inst)
+                hedge_price = hedge_ticker.get("last_price") or hedge_ticker.get("mark_price", 0)
+                last_hedge_price = pos.get("_last_hedge_price", hedge_price)
+                hedge_pos_btc = pos.get("current_hedge_btc", 0.0)
+
+                hedge_pnl_delta = hedge_pos_btc * (hedge_price - last_hedge_price)
+                pos["hedge_pnl_accumulated"] = pos.get("hedge_pnl_accumulated", 0.0) + hedge_pnl_delta
+                pos["_last_hedge_price"] = hedge_price
+
+                if abs(hedge_pnl_delta) > 0.01:
+                    logger.info(f"[{strategy}] Hedge PnL this cycle: ${hedge_pnl_delta:+,.2f} "
+                                f"(accumulated: ${pos['hedge_pnl_accumulated']:+,.2f})")
+                pm.save_state()
+            except Exception as e:
+                logger.warning(f"[{strategy}] Failed to fetch hedge price: {e}")
 
         logger.info(f"[{strategy}] bid={current_bid:.4f} delta={current_delta:.3f} "
                      f"DTE={current_dte:.1f}")
@@ -144,7 +162,6 @@ def run_cycle(client: DeribitClient, executor: OrderExecutor,
                 logger.error(f"[{strategy}] Failed to close option: {e}")
 
             # Close hedge
-            hedge_inst = pos.get("hedge_instrument")
             if hedge_inst:
                 try:
                     executor.hedge_with_quarterly(
@@ -170,7 +187,6 @@ def run_cycle(client: DeribitClient, executor: OrderExecutor,
         # ── Rebalance hedge ────────────────────────────────
         target_hedge = pm.compute_hedge_delta(strategy, current_delta)
         current_hedge = pos.get("current_hedge_btc", 0.0)
-        hedge_inst = pos.get("hedge_instrument")
 
         if hedge_inst and abs(target_hedge - current_hedge) > 0.01:
             logger.info(f"[{strategy}] Rebalance hedge: "
@@ -181,7 +197,6 @@ def run_cycle(client: DeribitClient, executor: OrderExecutor,
                     target_delta_btc=target_hedge,
                     current_hedge_btc=current_hedge,
                 )
-                # Update position state
                 pos["current_hedge_btc"] = target_hedge
                 pos["last_delta"] = current_delta
                 pm.save_state()
@@ -263,13 +278,22 @@ def _open_new_position(strategy: str, candidate: dict, n_contracts: float,
 
     hedge_instrument = None
     initial_hedge_btc = 0.0
+    initial_hedge_price = 0.0
 
     if quarterly:
         hedge_instrument = quarterly["instrument"]
         initial_delta = abs(candidate.get("delta", 0.5))
         initial_hedge_btc = initial_delta * n_contracts
 
-        logger.info(f"[{strategy}] Hedge: {hedge_instrument} "
+        # Get quarterly futures price for hedge PnL tracking
+        try:
+            hedge_ticker = client.get_ticker(hedge_instrument)
+            initial_hedge_price = (hedge_ticker.get("last_price")
+                                   or hedge_ticker.get("mark_price", 0))
+        except Exception:
+            initial_hedge_price = candidate["spot"]  # fallback to spot
+
+        logger.info(f"[{strategy}] Hedge: {hedge_instrument} @ ${initial_hedge_price:,.0f} "
                      f"delta={initial_delta:.3f} × {n_contracts:.2f} = "
                      f"{initial_hedge_btc:.4f} BTC")
         try:
@@ -299,6 +323,7 @@ def _open_new_position(strategy: str, candidate: dict, n_contracts: float,
         "score": candidate["score"],
         "hedge_instrument": hedge_instrument,
         "current_hedge_btc": initial_hedge_btc,
+        "_last_hedge_price": initial_hedge_price,
         "hedge_pnl_accumulated": 0.0,
         "hedge_txn_cost_accumulated": 0.0,
     }

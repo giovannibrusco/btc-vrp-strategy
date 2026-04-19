@@ -57,6 +57,22 @@ The VRP exists on both assets — option-only win rate is 82% on both BTC and SP
 
 BTC's structurally wide implied-realized spread (IV ~69% vs SPY ~16%) makes it the only market where the strategy is economically viable after hedging costs.
 
+## Dashboards
+
+Three interactive Streamlit dashboards accompany the research:
+
+**Research narrative** — guided walkthrough of the VRP edge and the approaches rejected along the way.
+
+![Narrative Dashboard](docs/images/narrative_dashboard.png)
+
+**Backtest explorer** — equity curves, robustness heatmaps, and statistical validation across IS/OOS/Full periods and three sizing configurations.
+
+![Backtest Dashboard](docs/images/backtest_dashboard.png)
+
+**Live paper trading monitor** — real-time position, Greeks, hedge state, and PnL on Deribit testnet.
+
+![Live Monitor](docs/images/live_monitor.png)
+
 ## Project Structure
 
 ```
@@ -64,7 +80,7 @@ BTC's structurally wide implied-realized spread (IV ~69% vs SPY ~16%) makes it t
 ├── scripts/                Entry points (backtest, sensitivity, dashboard data, paper trader)
 ├── notebooks/              Research notebooks with full output (5 notebooks)
 ├── tests/                  Statistical validation scripts
-├── dashboard/              Streamlit dashboard (3 risk configurations)
+├── dashboard/              Streamlit dashboards (story, backtest, live monitor)
 ├── dashboard_data/         Pre-generated dashboard data (included in repo)
 ├── config/                 Centralized parameters (params.yaml)
 ├── tools/                  Data download utilities (Deribit, optionsdx)
@@ -87,6 +103,8 @@ python scripts/run_backtest.py
 
 # Launch dashboard (works immediately with pre-generated data)
 streamlit run dashboard/dashboard.py
+streamlit run dashboard/story.py       # narrative research story
+streamlit run dashboard/live.py        # live paper trading monitor
 ```
 
 ## Live Paper Trading
