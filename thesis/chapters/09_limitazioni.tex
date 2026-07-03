@@ -1,0 +1,91 @@
+\chapter{Limitazioni e sviluppi futuri}
+\label{ch:limitazioni}
+
+Una presentazione onesta dei risultati richiede di dichiararne i limiti con
+la stessa chiarezza con cui se ne espongono i pregi. Questo capitolo
+raccoglie le limitazioni del lavoro, distinguendo quelle statistiche, di
+esecuzione e strutturali, e indica le direzioni di ricerca che ne
+discendono.
+
+\section{Limitazioni statistiche}
+\label{sec:lim-statistiche}
+
+La limitazione più rilevante è la scarsa numerosità del campione Bitcoin: 35
+trade in-sample e 10 out-of-sample. Gli intervalli di confidenza, per quanto
+non includano lo zero, sono ampi, e l'analisi per regimi out-of-sample, con
+così pochi trade, non è interpretabile. La validazione cross-asset su SPY
+(Capitolo~\ref{ch:validazione}) è stata concepita proprio per mitigare
+questo limite, ma non lo elimina sul mercato di interesse primario.
+
+La seconda limitazione è che il periodo out-of-sample è breve e favorevole:
+un mercato rialzista con volatilità in compressione gonfia verosimilmente lo
+Sharpe out-of-sample rispetto a quello che ci si attenderebbe in un regime
+neutro. Per questo, nella tesi, si è dato maggior peso al risultato
+in-sample, che comprende invece l'episodio di stress del 2022.
+
+La terza limitazione è l'assenza di un test formale di \emph{data snooping}
+sulla strategia finale. Sebbene il percorso di ricerca
+(Capitolo~\ref{ch:percorso}) documenti in modo trasparente le ipotesi
+scartate, non è stato applicato un test di superiorità predittiva del tipo
+di quello di \citet{hansen2005test}, che correggerebbe formalmente per la
+molteplicità delle strategie considerate.
+
+\section{Limitazioni di esecuzione}
+\label{sec:lim-esecuzione}
+
+Sul piano dell'esecuzione, la copertura delta è ribilanciata con cadenza
+giornaliera, mentre Bitcoin presenta rischio di gamma e di salto anche
+infragiornaliero: la copertura giornaliera lascia dunque un'esposizione
+residua tra un ribilanciamento e il successivo. In secondo luogo, i prezzi
+di esecuzione, pur modellati in modo conservativo (ingresso al bid, uscita
+all'ask), restano idealizzati: il modello non cattura i riempimenti parziali
+né lo slippage in condizioni di mercato sottili. In terzo luogo, la
+protezione dal rischio di coda non è implementata, e il suo costo non è
+incluso: per una strategia short volatility, l'acquisto di protezione contro
+i crash è un costo reale, che una versione operativa dovrebbe internalizzare.
+
+\section{Limitazioni strutturali}
+\label{sec:lim-strutturali}
+
+Sul piano strutturale, il vincolo di posizione singola limita la capacità
+della strategia: una sola posizione alla volta su un singolo sottostante.
+Come mostrato nel Capitolo~\ref{ch:percorso}, l'allentamento di questo
+vincolo è stato testato e respinto per via del drawdown inaccettabile, ma
+resta il fatto che la strategia ha una capacità di impiego limitata. Inoltre,
+il backtest non verifica in ogni istante la sufficienza del margine Deribit:
+i margini sono stati calcolati a posteriori (Capitolo~\ref{ch:money-management})
+ma non integrati come vincolo dinamico nella simulazione. Infine, l'assenza
+di stop loss, giustificata empiricamente, implica che la strategia richiede
+la tolleranza a drawdown intraposizione significativi: non è adatta a un
+investitore che non possa sostenerli.
+
+\section{Sviluppi futuri}
+\label{sec:lim-sviluppi}
+
+Le limitazioni indicano altrettante direzioni di ricerca. Sul fronte del
+segnale, il fallimento del gap RND--KDE non chiude la questione del
+\emph{timing} del premio: un modello GARCH condizionale sulla misura fisica,
+o un modello HAR-RV \citep{corsi2009simple} che sfrutti la memoria lunga
+della volatilità realizzata, potrebbero riabilitare un segnale di timing là
+dove il confronto pointwise tra densità ha fallito; anche un ensemble di
+previsioni di volatilità, che in letteratura tende a battere i singoli
+modelli, merita di essere esplorato.
+
+Sul fronte del rilevamento dei regimi, con un campione più ampio
+diventerebbero testabili modelli a commutazione di regime di tipo Markov,
+l'uso della volatilità della volatilità come indicatore di instabilità, e
+l'impiego del premio stesso come predittore dei propri rendimenti futuri,
+sulla scia di \citet{bollerslev2009expected}.
+
+Sul fronte dell'esecuzione, una versione operativa dovrebbe incorporare una
+protezione dal rischio di coda calcolata dalla superficie di volatilità, una
+copertura più frequente e un controllo dinamico del margine.
+
+Infine, sul fronte delle estensioni, l'applicazione a Ethereum, il secondo
+mercato di opzioni per liquidità su Deribit, è naturale una volta disponibili
+dati storici adeguati. La decomposizione cross-asset del
+Capitolo~\ref{ch:validazione} suggerisce inoltre una direzione controintuitiva:
+poiché su SPY la gamba opzionaria è profittevole ma la copertura è un costo
+netto, una struttura auto-coperta (per esempio uno strangle senza copertura
+delta) potrebbe rendere la strategia profittevole anche su asset a bassa
+volatilità, eliminando la componente che ne erode il rendimento.

@@ -1,0 +1,226 @@
+\chapter{Rassegna della letteratura}
+\label{ch:letteratura}
+
+Questo capitolo colloca il lavoro all'interno di cinque filoni di ricerca.
+Il primo definisce il premio per il rischio di volatilità nei mercati
+tradizionali e ne discute le spiegazioni teoriche
+(\S\ref{sec:lit-vrp-tradizionale}). Il secondo esamina le strategie
+sistematiche di vendita di volatilità e il loro profilo di rischio
+(\S\ref{sec:lit-short-vol}). Il terzo passa al mercato delle opzioni su
+criptovalute, dove il fenomeno assume dimensioni particolari
+(\S\ref{sec:lit-crypto-options}). Il quarto e il quinto trattano gli
+strumenti metodologici impiegati nella tesi: la stima della volatilità
+realizzata (\S\ref{sec:lit-realized-vol}) e l'estrazione della densità
+risk-neutral (\S\ref{sec:lit-rnd}), oltre ai criteri di dimensionamento del
+rischio (\S\ref{sec:lit-sizing}). Il capitolo si chiude posizionando il
+contributo di questa tesi (\S\ref{sec:lit-posizionamento}).
+
+\section{Il Volatility Risk Premium nei mercati tradizionali}
+\label{sec:lit-vrp-tradizionale}
+
+Il premio per il rischio di volatilità (VRP) è la differenza sistematica
+tra la volatilità implicita nei prezzi delle opzioni e la volatilità che il
+sottostante realizza successivamente. Empiricamente questa differenza è
+positiva e persistente: chi vende opzioni, e dunque vende volatilità,
+incassa in media un premio, mentre chi le acquista paga un costo atteso
+superiore al valore attuariale della protezione ottenuta.
+
+La prima evidenza sistematica del fenomeno su singole azioni e indici si
+deve a \citet{bakshi2003delta}, che studiano i rendimenti di posizioni in
+opzioni coperte in delta (\emph{delta-hedged gains}). Se il modello di
+Black--Scholes valesse esattamente e non esistesse alcun premio per il
+rischio di volatilità, il guadagno di una posizione coperta in delta
+dovrebbe essere nullo in media. Gli autori documentano invece guadagni
+sistematicamente negativi per chi detiene le opzioni, e li interpretano
+come prezzo di mercato di un rischio di volatilità priced negativamente:
+gli investitori sono disposti a pagare per detenere strumenti che
+guadagnano quando la volatilità sale.
+
+\citet{carr2009variance} formalizzano il concetto attraverso i
+\emph{variance swap}, la cui gamba fissa (il tasso di variance swap) è
+replicabile in modo model-free da un portafoglio statico di opzioni su un
+continuum di strike. La differenza tra il tasso di variance swap
+(volatilità attesa sotto la misura risk-neutral $\mathbb{Q}$) e la varianza
+effettivamente realizzata (sotto la misura fisica $\mathbb{P}$) misura
+direttamente il variance risk premium. Su indici e single name statunitensi
+il premio è ampiamente negativo per i compratori, coerentemente con
+\citet{bakshi2003delta}.
+
+\citet{bollerslev2009expected} mostrano che il VRP non è solo un premio
+statico ma ha contenuto informativo: la differenza tra varianza implicita e
+varianza realizzata prevede i rendimenti azionari futuri, con potere
+predittivo particolarmente forte sull'orizzonte trimestrale. Gli autori
+collegano il premio all'avversione al rischio aggregata e alla variabilità
+temporale dell'incertezza economica, offrendo un fondamento di equilibrio
+al fenomeno. Le principali spiegazioni teoriche del VRP, non
+mutuamente esclusive, sono infatti tre: l'avversione degli investitori a
+uno stato del mondo (alta volatilità) in cui la ricchezza marginale è
+elevata; la domanda strutturale di copertura, che spinge i prezzi delle
+opzioni sopra il loro valore attuariale; e i vincoli di capitale e di
+inventario dei market maker, che richiedono un compenso per assorbire
+l'offerta di rischio di volatilità.
+
+\section{Strategie sistematiche di vendita di volatilità}
+\label{sec:lit-short-vol}
+
+Se il VRP è un premio persistente, la sua cattura sistematica è in linea di
+principio possibile vendendo opzioni. La letteratura sulle strategie
+passive di vendita di volatilità nasce con \citet{whaley2002return}, che
+analizza l'indice CBOE S\&P~500 BuyWrite (BXM), una strategia
+\emph{buy-write} che detiene l'indice e vende sistematicamente call
+at-the-money. Whaley documenta, sul periodo 1988--2001, rendimenti
+corretti per il rischio superiori a quelli del sottostante e, soprattutto,
+una marcata riduzione della volatilità del portafoglio: la vendita
+sistematica della call converte parte del premio per il rischio di
+volatilità in reddito, al costo di rinunciare all'upside.
+
+Questa letteratura evidenzia però anche il profilo di rischio asimmetrico
+delle strategie short volatility. Il payoff tipico è composto da molti
+piccoli guadagni intervallati da rare perdite di grande entità, un profilo
+sintetizzato dalla metafora del \emph{picking up nickels in front of a
+steamroller}. Tre implicazioni sono rilevanti per questa tesi. Primo, le
+metriche basate sui soli momenti secondi (come lo Sharpe ratio) possono
+sovrastimare la qualità di queste strategie, che concentrano il rischio
+nelle code. Secondo, il dimensionamento della posizione e la gestione del
+rischio di coda sono determinanti quanto la selezione dell'opzione. Terzo,
+l'uso di stop loss su strategie short volatility è problematico, perché la
+componente di theta decay che genera il profitto richiede tempo e viene
+troncata da uscite premature, un punto che la presente tesi verifica
+empiricamente nel Capitolo~\ref{ch:percorso}.
+
+\section{Il mercato delle opzioni su criptovalute}
+\label{sec:lit-crypto-options}
+
+Il mercato delle opzioni su Bitcoin è giovane ma già oggetto di una
+letteratura empirica in rapida crescita. La quasi totalità dell'attività si
+concentra su Deribit, che controlla oltre l'80\% del volume globale di
+opzioni crypto \citep{alexander2023inverse}. Una specificità tecnica del
+mercato è che gli strumenti quotati sono \emph{inverse options}: premio e
+regolamento sono denominati in Bitcoin, mentre lo strike è in dollari.
+\citet{alexander2023inverse} mostrano che l'applicazione ingenua della
+formula di Black--Scholes standard alle inverse options produce volatilità
+implicite distorte, e che la volatilità implicita corretta per la struttura
+inverse è quasi sempre superiore a quella ottenuta con la formula standard:
+un dettaglio metodologico di cui la costruzione della volatility
+surface deve tenere conto.
+
+Il contributo più direttamente rilevante per questa tesi è quello di
+\citet{alexander2020bitcoin}, che costruiscono un indice di volatilità
+implicita per Bitcoin analogo al VIX, il precursore di quello che
+Deribit avrebbe poi standardizzato nell'indice DVOL, a partire da oltre
+sette milioni di prezzi di opzioni campionati ogni 15 minuti. Gli autori
+documentano un premio per il rischio di varianza su Bitcoin
+significativamente più ampio di quello dei mercati azionari. Studi
+successivi ne quantificano la magnitudine: \citet{almeida2024risk} stimano
+un variance risk premium annualizzato su Bitcoin compreso tra il 7\% e il
+14\%, contro il 2\% circa dell'S\&P~500, un premio dunque di un ordine
+di grandezza superiore. Un risultato particolarmente rilevante del loro
+lavoro è che il VRP è \emph{più elevato nei regimi di bassa volatilità}
+(0,10--0,17) che in quelli di alta volatilità (0,04--0,12), a indicare che
+la preoccupazione degli investitori per il rischio di varianza non è
+semplicemente proporzionale al livello corrente di volatilità.
+
+Sul segno e sulla catturabilità del premio, \citet{winkel2023pricing}
+stimano i pricing kernel impliciti nelle opzioni Deribit, ossia il rapporto
+tra densità risk-neutral e densità fisica, e trovano che gli investitori
+pagano un premio sostanziale per assicurarsi contro i movimenti di prezzo
+di breve termine, premio decrescente con la scadenza. La letteratura
+converge sul fatto che il premio per il rischio di volatilità osservato su
+Deribit è negativo e significativo, cosicché le strategie di vendita di
+volatilità sono attese generare performance corrette per il rischio
+positive. È precisamente questa l'ipotesi che la presente tesi mette alla
+prova in modo sistematico e con costi di transazione realistici.
+
+\section{Stima della volatilità realizzata}
+\label{sec:lit-realized-vol}
+
+La misurazione della volatilità realizzata è centrale per quantificare il
+VRP, poiché costituisce il termine di confronto della volatilità implicita.
+Lo stimatore close-to-close, basato sui soli prezzi di chiusura, ignora
+l'informazione contenuta nell'escursione infragiornaliera dei prezzi.
+\citet{parkinson1980extreme} propone uno stimatore basato sul range
+high--low che, sotto l'ipotesi di moto browniano senza drift, è circa
+cinque volte più efficiente dello stimatore close-to-close. Per Bitcoin,
+che è negoziato senza interruzione 24 ore su 24 e 7 giorni su 7, lo
+stimatore di Parkinson è particolarmente appropriato: non esistono
+discontinuità di chiusura e l'informazione infragiornaliera è pienamente
+disponibile e continua. Per questa ragione la tesi adotta la volatilità
+realizzata di Parkinson a 30 giorni come misura di riferimento.
+
+Sul fronte del \emph{forecasting} della volatilità, non impiegato nella
+strategia finale ma rilevante per gli sviluppi futuri, i due riferimenti
+canonici sono il modello GARCH di \citet{bollerslev1986generalized}, che
+cattura la persistenza (clustering) della volatilità condizionata, e il
+modello HAR-RV di \citet{corsi2009simple}, che approssima la memoria lunga
+della volatilità realizzata combinando componenti giornaliere, settimanali
+e mensili. Entrambi sono discussi nel Capitolo~\ref{ch:limitazioni} come
+possibili vie per riabilitare un segnale di \emph{timing} del premio.
+
+\section{Estrazione della densità risk-neutral}
+\label{sec:lit-rnd}
+
+Il risultato fondamentale sull'estrazione della densità risk-neutral (RND)
+implicita nei prezzi delle opzioni è quello di \citet{breeden1978prices}:
+la densità risk-neutral del sottostante alla scadenza è proporzionale alla
+derivata seconda del prezzo della call rispetto allo strike. In pratica,
+disponendo di prezzi di opzioni su un insieme discreto di strike, la RND si
+ottiene interpolando la superficie di volatilità implicita (tipicamente con
+spline o parametrizzazioni tipo SVI), convertendo in prezzi di call
+continui e differenziando numericamente due volte.
+
+Questa infrastruttura è stata impiegata nella presente ricerca per
+costruire un segnale di selezione delle opzioni, confrontando la RND (sotto
+la misura $\mathbb{Q}$) con una stima della densità fisica (sotto la misura
+$\mathbb{P}$) ottenuta via kernel density estimation. La letteratura
+avverte tuttavia sulla fragilità del confronto \emph{pointwise} tra due
+densità entrambe stimate con errore: la RND è sensibile agli errori di
+interpolazione sulle code, e la densità fisica dipende in modo critico da
+assunzioni di stazionarietà e dalla scelta della finestra. Come documentato
+nel Capitolo~\ref{ch:percorso}, questa fragilità è la ragione empirica per
+cui il segnale basato sul gap RND--KDE si è rivelato privo di potere
+predittivo, pur restando la RND un utile strumento di contesto. La stessa
+metodologia di stima dei pricing kernel è al centro del lavoro di
+\citet{winkel2023pricing} e \citet{almeida2024risk} sul mercato Bitcoin.
+
+\section{Criteri di dimensionamento e gestione del rischio}
+\label{sec:lit-sizing}
+
+Il problema del dimensionamento ottimo della posizione ha il suo
+riferimento classico nel criterio di \citet{kelly1956new}, che massimizza
+il tasso di crescita atteso del capitale nel lungo periodo. Il criterio di
+Kelly è tuttavia noto per essere aggressivo e per essere estremamente
+sensibile agli errori di stima dei parametri (probabilità di vincita e
+rapporto payoff): quando questi sono stimati su campioni ridotti,
+l'incertezza sulla frazione ottima è ampia e l'applicazione della frazione
+piena espone a drawdown severi. La pratica di mercato adotta quindi
+frazioni ridotte del Kelly (\emph{fractional Kelly}, tipicamente tra un
+mezzo e un decimo), che sacrificano una piccola parte del tasso di crescita
+atteso in cambio di una netta riduzione della variabilità del capitale.
+Nella presente tesi il Half-Kelly è utilizzato non come metodo di
+dimensionamento ma come \emph{sanity check} della ragionevolezza delle
+configurazioni adottate (Capitolo~\ref{ch:money-management}), coerentemente
+con l'osservazione che il vincolo operativo rilevante per una strategia
+short volatility non è tanto il rischio di rovina quanto la tolleranza al
+drawdown.
+
+\section{Posizionamento di questa tesi}
+\label{sec:lit-posizionamento}
+
+Rispetto alla letteratura descritta, il contributo di questa tesi si
+articola su tre piani. Primo, sul piano \emph{applicativo}: mentre gran
+parte degli studi sul VRP crypto si concentra sulla misurazione del premio
+(la sua esistenza, la sua magnitudine, il suo segno), questa tesi affronta
+la domanda operativa di se e come il premio sia catturabile da una
+strategia replicabile, al netto di costi di transazione realistici,
+dell'esecuzione T+1 e della copertura delta. Secondo, sul piano
+\emph{metodologico}: il lavoro documenta in modo trasparente non solo la
+strategia sopravvissuta, ma anche le cinque ipotesi testate e scartate:
+un antidoto al \emph{publication bias} che affligge la letteratura sulle
+strategie di trading, dove tipicamente vengono riportati solo i risultati
+positivi. In particolare, l'individuazione dell'artefatto da opzioni
+illiquide con bid nullo (Capitolo~\ref{ch:percorso}) è un monito
+metodologico di portata generale. Terzo, sul piano della \emph{robustezza}:
+la validazione cross-asset su opzioni SPY, con la stessa strategia e senza
+alcuna riottimizzazione, funge da test out-of-sample su una asset class
+diversa e su un orizzonte temporale molto più lungo, isolando il meccanismo
+di cattura del premio dalle specificità del campione Bitcoin.

@@ -1,0 +1,64 @@
+\chapter{Conclusioni}
+\label{ch:conclusioni}
+
+Questa tesi ha affrontato una domanda operativa precisa: se il premio per il
+rischio di volatilità sulle opzioni Bitcoin sia catturabile in modo
+sistematico, al netto di costi di transazione realistici, attraverso una
+strategia replicabile di vendita di opzioni con copertura delta. La risposta
+è affermativa, e si articola in sei conclusioni.
+
+La prima è che il premio per il rischio di volatilità su Bitcoin è reale e
+catturabile in modo sistematico. La strategia Top Vega produce uno Sharpe
+ratio in-sample di 1,75, statisticamente significativo all'1\%
+($p = 0{,}007$), ottenuto attraversando il bear market del 2022, e al netto
+di costi di transazione modellati in modo conservativo. Il premio, del resto,
+è strutturalmente ampio: la volatilità implicita eccede quella realizzata nel
+93\% delle giornate, con uno spread medio di 16,2 punti percentuali.
+
+La seconda è che la strategia più semplice batte quelle più sofisticate.
+La selezione dell'opzione a vega massimo, priva di parametri da stimare,
+sopravvive là dove falliscono lo scoring basato sul gap tra densità, la
+selezione Premium/DTE, la modalità multi-posizione, i filtri di regime e lo
+stop loss. La semplicità non è un punto di partenza, ma il residuo di un
+vaglio severo.
+
+La terza è che il percorso dal complesso al semplice è esso stesso un
+risultato. Documentare le cinque ipotesi scartate, ciascuna con un criterio
+di rigetto quantitativo, è un contributo metodologico contro il
+\emph{publication bias} che affligge la letteratura sulle strategie di
+trading. In particolare, l'individuazione dell'artefatto da opzioni
+illiquide con prezzo di uscita nullo, responsabile del 116\% dei profitti
+apparenti di una delle strategie, è un monito di portata generale per
+chiunque backtesti strategie in opzioni.
+
+La quarta è che l'audit ha trasformato risultati apparentemente ottimi in
+risultati credibili. Le distorsioni corrette nel corso del lavoro (uscite
+valorizzate al bid anziché all'ask, costi assenti, opzioni illiquide con
+prezzi fittizi) avrebbero prodotto una strategia illusoriamente redditizia.
+Solo la loro rimozione ha reso i risultati finali difendibili.
+
+La quinta è che il \emph{timing} del premio resta un problema aperto. Cinque
+indicatori sono stati testati come possibili filtri, e nessuno ha mostrato
+potere predittivo sul profitto dei singoli trade: il fattore determinante non
+sono le condizioni al momento dell'ingresso, ma ciò che accade durante il
+trade. Individuare un segnale di timing affidabile rimane una sfida per la
+ricerca futura.
+
+La sesta è che la validazione cross-asset conferma la natura strutturale del
+meccanismo. Il win rate della sola gamba opzionaria è identico su Bitcoin e
+su SPY (82\%), su un campione azionario quattro volte più ampio e su
+quattordici anni che comprendono crisi ed episodi di stress. L'alpha è
+proporzionale al livello della volatilità implicita: Bitcoin, con una
+volatilità implicita quattro volte superiore a quella dell'indice azionario,
+è il mercato in cui il premio è abbastanza ampio da superare i costi di
+copertura. Il premio di volatilità è un fenomeno generale; Bitcoin è, allo
+stato attuale, il luogo migliore per raccoglierlo.
+
+Resta un'avvertenza prospettica. Il mercato delle opzioni su criptovalute è
+giovane e in rapida maturazione; l'ingresso di capitale dedicato e di market
+maker istituzionali potrebbe, nel tempo, comprimere il premio verso i livelli
+dei mercati tradizionali. La finestra di opportunità documentata in questo
+lavoro non è necessariamente permanente. La replicabilità operativa della
+strategia, dimostrata dal sistema di paper trading, ne consente tuttavia il
+monitoraggio continuo, così da riconoscere per tempo l'eventuale erosione del
+premio che oggi rende Bitcoin un caso di studio unico.

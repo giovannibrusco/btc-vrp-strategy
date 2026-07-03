@@ -1,0 +1,147 @@
+% ============================================================
+% TESI DI LAUREA MAGISTRALE - Giovanni Brusco
+% Il Volatility Risk Premium su Bitcoin: origini strutturali e
+% strategie di raccolta tramite opzioni delta-neutrali
+% Università Cattolica del Sacro Cuore — Milano
+%
+% Compilazione: tectonic main.tex
+% Frontespizio provvisorio — da adattare alle indicazioni del relatore
+% ============================================================
+\documentclass[12pt,a4paper,oneside]{book}
+
+% ── Lingua e codifica ──────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage{lmodern}
+
+% ── Layout ─────────────────────────────────────────────────
+\usepackage[top=3cm,bottom=3cm,inner=3.5cm,outer=2.5cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+% ── Matematica, tabelle, figure ────────────────────────────
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{makecell}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{multirow}
+\captionsetup{font=small,labelfont=bf,skip=6pt}
+
+% ── Bibliografia (author-year, natbib + bibtex) ────────────
+\usepackage{natbib}
+\bibliographystyle{apalike}
+
+% ── Header/footer ──────────────────────────────────────────
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\leftmark}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Link ───────────────────────────────────────────────────
+\usepackage[hidelinks]{hyperref}
+
+% ── Comandi utili ──────────────────────────────────────────
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+\usepackage{xcolor}
+
+\begin{document}
+
+% ════════════════════════════════════════════════════════════
+% FRONTESPIZIO (provvisorio — in attesa template ufficiale)
+% ════════════════════════════════════════════════════════════
+\begin{titlepage}
+\centering
+
+{\Large\scshape Università Cattolica del Sacro Cuore\par}
+\vspace{0.3cm}
+{\large Sede di Milano\par}
+\vspace{0.5cm}
+{\large Facoltà di Scienze Bancarie, Finanziarie e Assicurative\par}
+\vspace{0.3cm}
+{\large Corso di Laurea Magistrale in Finanza\par}
+
+\vspace{3cm}
+
+{\LARGE\bfseries Il Volatility Risk Premium su Bitcoin:\\[0.4em]
+origini strutturali e strategie di raccolta\\[0.4em]
+tramite opzioni delta-neutrali\par}
+
+\vspace{3cm}
+
+\begin{minipage}[t]{0.45\textwidth}
+\raggedright
+{\normalsize Relatore:\\[0.2em]
+\textbf{Chiar.mo Prof. [NOME RELATORE]}\par}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\raggedleft
+{\normalsize Tesi di Laurea di:\\[0.2em]
+\textbf{Giovanni Brusco}\\[0.2em]
+Matricola n. [MATRICOLA]\par}
+\end{minipage}
+
+\vfill
+
+{\normalsize Anno Accademico 2025/2026\par}
+
+\end{titlepage}
+
+% ════════════════════════════════════════════════════════════
+\frontmatter
+
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+Il mercato delle opzioni su Bitcoin presenta un premio per il rischio di
+volatilità (Volatility Risk Premium, VRP) ampio e persistente: nel periodo
+giugno 2021 -- settembre 2024 la volatilità implicita (indice DVOL di
+Deribit) ha superato la volatilità realizzata a 30 giorni (stimatore di
+Parkinson) nel 93\% delle giornate di negoziazione, con uno spread medio di
+16,2 punti percentuali annualizzati. Questa tesi studia se tale premio sia
+catturabile in modo sistematico attraverso la vendita giornaliera
+dell'opzione a maggior vega, coperta in delta tramite futures trimestrali.
+
+La strategia finale (selezione Top Vega, posizione singola, exit al 50\%
+del premio o a 5 giorni dalla scadenza) produce uno Sharpe ratio
+in-sample di 1,75 (p = 0,007) attraverso il bear market del 2022, e 1,52
+out-of-sample. Il percorso di ricerca è esso stesso un risultato: cinque
+approcci più complessi (scoring basato sul gap tra densità risk-neutral e
+fisica, selezione Premium/DTE, multi-posizione, filtri di regime, stop
+loss) sono stati testati e scartati con criteri statistici espliciti. La
+validazione cross-asset su opzioni SPY (147 trade, 14 anni) conferma che il
+meccanismo non è un artefatto del campione: il win rate della gamba
+opzionaria è identico (82\%) sulle due asset class, e la differenza di
+redditività è interamente attribuibile all'economia della copertura delta.
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+% ════════════════════════════════════════════════════════════
+\mainmatter
+
+\input{chapters/01_introduzione}
+\input{chapters/02_letteratura}
+\input{chapters/03_dati_infrastruttura}
+\input{chapters/04_percorso_ricerca}
+\input{chapters/05_strategia_topvega}
+\input{chapters/06_money_management}
+\input{chapters/07_validazione}
+\input{chapters/08_paper_trading}
+\input{chapters/09_limitazioni}
+\input{chapters/10_conclusioni}
+
+% ════════════════════════════════════════════════════════════
+\backmatter
+
+\bibliography{bibliography}
+
+\end{document}

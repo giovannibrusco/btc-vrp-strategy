@@ -230,29 +230,50 @@ IM = [max(0.15 - OTM/spot, 0.10) + mark_price] × n_contracts × spot
 
 **Nota sul delta all'entry**: Il worst-case margin include un trade con delta 0.75 all'entry. Il filtro |delta| ≤ 0.50 è applicato al signal date (T), ma il delta si muove tra segnale ed esecuzione (T+1). Il trade aveva delta -0.495 al signal e -0.755 all'entry per un movimento BTC overnight. Questo è realistico e non evitabile.
 
-### 7.3 Risk of Ruin — Simulazione Monte Carlo
+### 7.3 Risk of Ruin — Simulazione Monte Carlo (CORRETTA luglio 2026)
 
-10.000 percorsi di 200 trade ciascuno, capital-based sizing, soglia di rovina $10,000, tre scenari.
+> **⚠️ NOTA DI CORREZIONE (luglio 2026, durante la stesura della tesi).**
+> La versione precedente di questa sezione riportava una tabella di drawdown attesi
+> (mediane -7%/-14%/-20%, scenari parametrici su WR/PR) che si è rivelata **non
+> riproducibile e non riferita a questa strategia**. Il reverse-engineering ha mostrato
+> che quei numeri richiedevano perdite per trade di ~1,6x il risk budget, cioè oltre
+> 3x la perdita peggiore mai osservata nei 35 trade reali della Top Vega
+> (worst reale: -0,50%/-1,33%/-3,00% per le tre config, esattamente risk/buffer come
+> da costruzione del sizing). I numeri provenivano quasi certamente dall'analisi di
+> money management della **strategia V1 abbandonata** (notebook 04, capitale $10M,
+> trade direzionali sui future), trascinati per errore in questo documento.
+> Lo script originale non esiste in nessuna posizione accessibile (verificati: repo,
+> git history, Desktop, OneDrive, Google Drive, Notion).
+> La sezione seguente riporta la simulazione **corretta e riproducibile**
+> (script: `scripts/mc_drawdown_simulation.py`, seed 2026), che è quella usata
+> nella tesi (Capitolo 6).
 
-**Dove P(Ruin) supera l'1%**:
+**Metodo**: circular block bootstrap dei rendimenti giornalieri mark-to-market IS,
+10.000 percorsi × 845 giorni (orizzonte = periodo IS), blocchi di 20 giorni
+(preserva il clustering delle perdite del 2022; robusto a blocchi 5-40).
+Stress dichiarato: ogni rendimento giornaliero negativo amplificato ×1,5.
+Soglia di rovina $10.000.
 
-| Scenario | P(Ruin) > 1% a | Vega corrispondente |
-|----------|---------------|-------------------|
-| Stime IS (WR=65.7%, PR=2.57) | Mai (< 0.1% anche a risk 15%) | — |
-| Pessimistico (WR=55%, PR=2.0) | risk = 13% | vega ~237 |
-| Molto pessimistico (WR=50%, PR=1.5) | risk = 8% | vega ~146 |
+**Risultati**:
 
-**Le tre configurazioni hanno P(Ruin) = 0.00% in tutti e tre gli scenari.** Nessun percorso su 10.000 ha mai raggiunto la rovina a risk 1-3%.
+| Configurazione | DD realizzato IS | Mediana | P95 | P99 | Stress med | Stress P95 | P(Ruin) base |
+|----------------|-----------------|---------|-----|-----|------------|------------|--------------|
+| Conservativa (1%) | -3.9% | -3.7% | -5.9% | -7.5% | -18.0% | -25.0% | 0.00% |
+| Moderata (2%) | -10.3% | -9.7% | -15.1% | -18.8% | -41.6% | -54.6% | 0.00% |
+| Aggressiva (3%) | -22.6% | -21.4% | -31.9% | -38.7% | -71.4% | -83.9% | 0.00% |
 
-**Il vincolo reale: il drawdown, non la rovina.** Max drawdown atteso (mediana e P95):
+**Validazione del modello**: il drawdown realizzato nel backtest cade vicino alla
+mediana simulata in tutte le configurazioni — l'esperienza storica è una
+realizzazione tipica della distribuzione, non un caso fortunato.
 
-| Configurazione | Stime IS | Pessimistico | Molto Pessimistico |
-|----------------|----------|-------------|-------------------|
-| Conservativa (1%) | -7% (P95: -11%) | -10% (P95: -16%) | -14% (P95: -23%) |
-| Moderata (2%) | -14% (P95: -21%) | -20% (P95: -30%) | -26% (P95: -42%) |
-| Aggressiva (3%) | -20% (P95: -30%) | -28% (P95: -42%) | -37% (P95: -56%) |
+**P(Ruin)**: 0.00% in tutte le configurazioni nello scenario base (il percorso
+peggiore dell'aggressiva perde ~39%, contro il -90% necessario per la rovina).
+Sotto stress: 0.00% per conservativa e moderata, 0.23% per l'aggressiva.
 
-**Come leggere la tabella**: Se scegli la configurazione moderata e il mondo reale è peggiore delle stime IS (scenario pessimistico), il drawdown al 95° percentile è -30%. La scelta della configurazione dipende dalla tolleranza al drawdown, non dal rischio di rovina.
+**Come leggere la tabella**: il vincolo operativo resta il drawdown, non la rovina.
+Nello scenario di stress la moderata arriva a mediana -41.6% e l'aggressiva a
+-71.4%, mentre la conservativa si ferma a -18.0%: la scelta della configurazione
+dipende dalla tolleranza al drawdown nello scenario avverso.
 
 ### 8. Profilo tipico dei trade
 
@@ -476,8 +497,8 @@ La stessa strategia (Top Vega, stessi parametri, zero ottimizzazione) è stata t
 | Capital-based vega sizing | Si adatta al capitale corrente; Sharpe invariante; three configs per diversi appetiti al rischio |
 | Half-Kelly come sanity check, non sizing | 35 trade: stime input troppo rumorose per Kelly ottimale. HK conferma che le configurazioni sono conservative (2-11% del HK) ma proporzionate all'incertezza |
 | Soglia rovina $10k | Margine minimo Deribit per 1 trade conservativo con Standard Margin. Calcolato sui trade IS con buffer 1.5x |
-| P(Ruin) = 0% su tutte le configurazioni | Monte Carlo 10.000 percorsi × 200 trade. Anche nello scenario molto pessimistico (WR=50%, PR=1.5) le configurazioni non raggiungono mai la rovina |
-| Drawdown come vincolo, non rovina | La scelta tra configurazioni dipende dalla tolleranza al drawdown (P95: -11% a -56% a seconda di config e scenario), non dal rischio di rovina |
+| P(Ruin) = 0% su tutte le configurazioni (base) | Monte Carlo corretto (luglio 2026): block bootstrap daily MTM, 10.000 percorsi × 845 gg. P(Ruin) 0% base; sotto stress ×1,5 solo l'aggressiva mostra 0,23% |
+| Drawdown come vincolo, non rovina | La scelta tra configurazioni dipende dalla tolleranza al drawdown nello scenario avverso (stress med: -18% cons, -42% mod, -71% agg), non dal rischio di rovina |
 | Exit al bid → ask | Costo realistico di chiusura (ricompri all'ask) |
 | Delta filter ≤ 0.50 | Esclude deep ITM illiquide con bid=0 |
 | Parkinson RV30 | Più efficiente del close-to-close per BTC 24/7 (cattura range intraday) |
