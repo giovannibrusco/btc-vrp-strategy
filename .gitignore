@@ -30,3 +30,7 @@ build/
 
 # Claude Code
 .claude/
+
+# One-shot local scripts / drafts
+fix_live_state.py
+04_money_management.ipynb
