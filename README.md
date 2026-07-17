@@ -13,10 +13,8 @@
 
 <img src="docs/images/vol_surface_3d.png" width="720" alt="BTC Implied Volatility Surface"/>
 
-**🌀 Interactive 3D version:** open [`docs/interactive/vol_surface.html`](docs/interactive/vol_surface.html) in your browser — rotate, zoom, hover on real Deribit data
-```bash
-open docs/interactive/vol_surface.html   # after cloning
-```
+**[🌀 Explore the interactive 3D vol surface →](https://raw.githack.com/giovannibrusco/btc-vrp-strategy/main/docs/interactive/vol_surface.html)**
+*rotate · zoom · hover on real Deribit data — or open [`docs/interactive/vol_surface.html`](docs/interactive/vol_surface.html) locally after cloning*
 
 </div>
 
