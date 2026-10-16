@@ -14,7 +14,7 @@
 <img src="docs/images/vol_surface_3d.png" width="720" alt="BTC Implied Volatility Surface"/>
 
 **[🌀 Explore the interactive 3D vol surface →](https://raw.githack.com/giovannibrusco/btc-vrp-strategy/main/docs/interactive/vol_surface.html)**
-*rotate · zoom · hover on real Deribit data — or open [`docs/interactive/vol_surface.html`](docs/interactive/vol_surface.html) locally after cloning*
+*rotate · zoom · hover on real Deribit data, or open [`docs/interactive/vol_surface.html`](docs/interactive/vol_surface.html) locally after cloning*
 
 </div>
 
@@ -22,7 +22,7 @@
 
 ## 📌 TL;DR
 
-Bitcoin options are structurally expensive: implied volatility (Deribit DVOL) exceeded 30-day realized volatility on **93% of trading days** (Jun 2021 – Sep 2024), with an average spread of **+16.2 vol points** — roughly 4× the equity-index VRP.
+Bitcoin options are structurally expensive: implied volatility (Deribit DVOL) exceeded 30-day realized volatility on **93% of trading days** (Jun 2021 – Sep 2024), with an average spread of **+16.2 vol points**, roughly 4× the equity-index VRP.
 
 This project harvests that premium with the **simplest strategy that survived a systematic elimination process**: sell the highest-vega delta-neutral option each day, hedge with quarterly futures, exit at 50% premium capture or DTE ≤ 5.
 
@@ -36,11 +36,11 @@ This project harvests that premium with the **simplest strategy that survived a 
 |------------------|:-------------------:|:-------------------:|:--------------------:|
 | Period           | Jun 2021 – Sep 2023 | Oct 2023 – Sep 2024 | Jan 2010 – Dec 2023  |
 | Trades           | 35                  | 10                  | 147                  |
-| Win rate         | 65.7%               | 70.0%               | 66.0%                |
+| Win rate         | 65.7%               | 60.0%               | 66.0%                |
 | **Sharpe**       | **1.75**            | **1.52**            | 0.79                 |
 | Return (moderate)| +19.3%              | +7.0%               | +9.1%                |
 | Max DD (MTM)     | −10.3%              | −2.3%               | −2.3%                |
-| t-test (p-value) | 0.007               | 0.091               | —                    |
+| t-test (p, 1-sided) | 0.007            | 0.091               | n/a                  |
 
 > 💪 The in-sample period **includes the 2022 bear market** (BTC −55% in a single quarter). Bootstrap 95% CI for IS Sharpe: [0.72, 2.73], P(Sharpe > 1) = 93%. Sharpe is invariant across all sizing configurations.
 
@@ -48,15 +48,15 @@ This project harvests that premium with the **simplest strategy that survived a 
 <img src="docs/images/equity_curve.png" width="850" alt="Equity curve"/>
 </div>
 
-## 🔬 The Research Journey — Complexity That Didn't Survive
+## 🔬 The Research Journey: Complexity That Didn't Survive
 
-The final strategy is what remains after **five more sophisticated ideas were built, tested and rejected** with explicit quantitative criteria — the opposite of publication bias:
+The final strategy is what remains after **five more sophisticated ideas were built, tested and rejected** with explicit quantitative criteria (the opposite of publication bias):
 
 | # | Hypothesis | Verdict | Why |
 |---|-----------|---------|-----|
-| 1 | 🧮 RND–KDE gap scoring | ❌ Rejected | Demeaned gap vs PnL: β < 0, p = 0.37 — no predictive power |
-| 2 | ⏱️ Premium/DTE scoring | ❌ Rejected | **116% of profits** came from illiquid bid=0 options — a data artifact. Post-fix Sharpe: −0.24 |
-| 3 | 🔀 Multi-position (3×) | ❌ Rejected | IS max drawdown −49.7% — positions crash together |
+| 1 | 🧮 RND–KDE gap scoring | ❌ Rejected | Demeaned gap vs PnL: β < 0, p = 0.37, no predictive power |
+| 2 | ⏱️ Premium/DTE scoring | ❌ Rejected | **116% of profits** came from illiquid bid=0 options, a data artifact. Post-fix Sharpe: −0.24 |
+| 3 | 🔀 Multi-position (3×) | ❌ Rejected | IS max drawdown −49.7%: positions crash together |
 | 4 | 🚦 Regime filters (5 indicators) | ❌ Rejected | All correlations with trade PnL < 0.25 |
 | 5 | 🛑 Stop loss | ❌ Rejected | At every level, kills more winner PnL than it saves on losers |
 | 6 | 🏆 **Top Vega (final)** | ✅ **Survived** | Zero parameters, maximum VRP exposure per trade |
@@ -77,7 +77,7 @@ SIZE     vega_target = (equity × risk%) / (worst_loss_per_vega × buffer)
 | 🟡 Moderate     | 2% | 1.5× | +19.3% | −10.3% | −9.7% | −15.1% |
 | 🔴 Aggressive   | 3% | 1.0× | +47.8% | −22.6% | −21.4% | −31.9% |
 
-Monte Carlo: 10,000 block-bootstrap paths of daily MTM returns — the realized drawdown sits at the simulated median (model validation), and **P(ruin) = 0%** in every configuration ([`scripts/mc_drawdown_simulation.py`](scripts/mc_drawdown_simulation.py), fully reproducible, seed 2026).
+Monte Carlo: 10,000 block-bootstrap paths of daily MTM returns: the realized drawdown sits at the simulated median (model validation), and **P(ruin) = 0%** in every configuration under the base scenario (0.23% for Aggressive under the stress scenario) ([`scripts/mc_drawdown_simulation.py`](scripts/mc_drawdown_simulation.py), fully reproducible, seed 2026).
 
 <div align="center">
 <img src="docs/images/mc_equity_paths.png" width="850" alt="Monte Carlo equity paths"/>
@@ -85,7 +85,7 @@ Monte Carlo: 10,000 block-bootstrap paths of daily MTM returns — the realized 
 
 ## 🌍 Why BTC and Not Equities?
 
-Same strategy, zero re-optimization, applied to SPY options over 14 years: the option leg wins **82% of the time on both assets** — the VRP is universal. The difference is entirely in the hedge economics:
+Same strategy, zero re-optimization, applied to SPY options over 14 years: the option leg wins **82% of the time on both assets**, so the VRP itself is universal. The difference is entirely in the hedge economics:
 
 |  | 🟠 BTC | 🔵 SPY |
 |--|:---:|:---:|
@@ -129,7 +129,7 @@ python scripts/run_trader.py --status   # check positions
 
 ## 📈 Dashboards
 
-Three Streamlit apps ship with the repo (pre-generated data included — they work without the raw dataset):
+Three Streamlit apps ship with the repo (pre-generated data included, so they work without the raw dataset):
 
 | Dashboard | Command | What it shows |
 |-----------|---------|---------------|
@@ -161,13 +161,13 @@ cp .env.example .env   # then fill DERIBIT_CLIENT_ID / SECRET
 ## 🗂️ Repository Structure
 
 ```
-├── 📁 src/               Core library — backtest engine, RND extraction, scoring, live trading
-├── 📁 scripts/           Entry points — backtest, sensitivity, Monte Carlo, paper trader, figures
+├── 📁 src/               Core library: backtest engine, RND extraction, scoring, live trading
+├── 📁 scripts/           Entry points: backtest, sensitivity, Monte Carlo, paper trader, figures
 ├── 📁 notebooks/         Research notebooks (signals & RND, sensitivity, money management, validation)
 ├── 📁 tests/             Statistical validation scripts
 ├── 📁 dashboard/         Streamlit apps (story, backtest explorer, live monitor)
-├── 📁 dashboard_data/    Pre-generated results (committed — dashboards work out of the box)
-├── 📁 thesis/            📜 MSc thesis (LaTeX, Italian) — full writeup of the research
+├── 📁 dashboard_data/    Pre-generated results (committed: dashboards work out of the box)
+├── 📁 thesis/            📜 MSc thesis (LaTeX, Italian): full writeup of the research
 ├── 📁 config/            Centralized parameters (params.yaml)
 ├── 📁 tools/             Data download utilities (Deribit, optionsDX)
 └── 📁 docs/              Documentation, images, interactive charts
@@ -177,15 +177,15 @@ cp .env.example .env   # then fill DERIBIT_CLIENT_ID / SECRET
 
 Raw option data (~5 GB) is **not** included:
 
-- **BTC options** — Deribit historical EOD, Jun 2021 – Sep 2024 → `Data/Options_Historical_DataSet/`
-- **BTC spot / futures / funding** — via `tools/` scripts (Deribit & Binance APIs)
-- **SPY options** — [optionsDX](https://www.optionsdx.com/) EOD 2010–2023 → `SPY Options/extracted/`
+- **BTC options**: Deribit historical EOD, Jun 2021 – Sep 2024 → `Data/Options_Historical_DataSet/`
+- **BTC spot / futures / funding**: via `tools/` scripts (Deribit & Binance APIs)
+- **SPY options**: [optionsDX](https://www.optionsdx.com/) EOD 2010–2023 → `SPY Options/extracted/`
 
 `dashboard_data/` ships with the repo, so dashboards and the Monte Carlo script run out of the box.
 
 ## 🎓 Academic Context
 
-This repository accompanies the MSc Finance thesis *"Il Volatility Risk Premium su Bitcoin: origini strutturali e strategie di raccolta tramite opzioni delta-neutrali"* (Università Cattolica del Sacro Cuore, Milan). The full LaTeX source lives in [`thesis/`](thesis/); every number in the thesis is reproducible from the code and data in this repo.
+This repository accompanies the MSc Finance thesis *"Il Volatility Risk Premium su Bitcoin: origini strutturali e strategie di raccolta tramite opzioni delta-neutrali"* (Università Cattolica del Sacro Cuore, Milan). The full LaTeX source lives in [`thesis/`](thesis/); every number in the thesis is reproducible from the code in this repo (the raw data must be downloaded separately, see [Data](#-data)).
 
 ## ⚠️ Disclaimer
 

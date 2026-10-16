@@ -6,6 +6,7 @@ Created on Sat Jul 12 12:03:40 2025
 @author: giovannibrusco
 """
 import pandas as pd
+from pathlib import Path
 import requests
 import time
 from datetime import datetime
@@ -58,7 +59,7 @@ end_date = datetime.today()
 df = get_binance_klines('BTCUSDT', '1d', start_date, end_date)
 
 # 💾 Salva
-df.to_csv("/Users/giovannibrusco/Desktop/Progetto BTC/Data/btc_spot_daily.csv", index=False)
+df.to_csv(Path(__file__).resolve().parent.parent / "Data" / "btc_spot_daily.csv", index=False)
 print("✅ File salvato in Data/btc_spot_daily.csv")
 
 

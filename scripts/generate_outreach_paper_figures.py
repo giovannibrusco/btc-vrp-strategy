@@ -26,7 +26,7 @@ import numpy as np
 import pandas as pd
 
 # ------------------------------------------------------------------ paths --
-BASE = Path("/Users/giovannibrusco/Desktop/Progetto BTC")
+BASE = Path(__file__).resolve().parent.parent
 DATA = BASE / "dashboard_data"
 RAW  = BASE / "Data"
 SPY  = BASE / "SPY Options"

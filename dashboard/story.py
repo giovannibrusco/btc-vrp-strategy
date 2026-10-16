@@ -41,8 +41,10 @@ LAYOUT = dict(
 )
 
 DATA_DIR = Path("dashboard_data")
-RAW_DIR = Path("Data")
-SPY_DIR = Path("SPY Options")
+# Small research extracts (DVOL, spot, exploratory trades, SPY results) shipped
+# with the repo so the story runs without the raw ~5GB dataset in Data/
+RAW_DIR = DATA_DIR / "research"
+SPY_DIR = DATA_DIR / "research"
 
 st.set_page_config(
     page_title="BTC VRP Strategy — Research Story",

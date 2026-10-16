@@ -18,7 +18,7 @@ import matplotlib.ticker as mticker
 from pathlib import Path
 
 # ── Paths ──────────────────────────────────────────────────────────────────
-BASE = Path("/Users/giovannibrusco/Desktop/Progetto BTC")
+BASE = Path(__file__).resolve().parent.parent
 DATA = BASE / "dashboard_data"
 SPY  = BASE / "SPY Options"
 OUT  = BASE / "outputs" / "paper_figures"

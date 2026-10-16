@@ -10,7 +10,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-PROJ = "/Users/giovannibrusco/Desktop/Progetto BTC"
+PROJ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(PROJ, "thesis", "figures")
 rng = np.random.default_rng(2026)
 N, BLOCK = 10_000, 20

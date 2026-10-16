@@ -6,3 +6,5 @@ plotly>=5.22
 tqdm>=4.66
 PyYAML>=6.0
 python-dotenv>=0.21
+matplotlib>=3.8
+requests>=2.31

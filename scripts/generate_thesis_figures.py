@@ -13,7 +13,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-PROJ = "/Users/giovannibrusco/Desktop/Progetto BTC"
+PROJ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(PROJ, "thesis", "figures")
 sys.path.insert(0, PROJ)
 

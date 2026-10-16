@@ -17,7 +17,7 @@ start_date = datetime(2021, 6, 1)
 end_date = datetime(2024, 9, 30)  
 instrument = "BTC-PERPETUAL"
 resolution = 5  # minuti
-save_path = "/Users/giovannibrusco/Desktop/Progetto BTC/Data/btc_perpetual_5min.csv"
+save_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Data", "btc_perpetual_5min.csv")
 
 # === INIZIALIZZA LISTA RISULTATI ===
 all_data = []

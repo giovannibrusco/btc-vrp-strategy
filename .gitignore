@@ -34,3 +34,9 @@ build/
 # One-shot local scripts / drafts
 fix_live_state.py
 04_money_management.ipynb
+
+# Personal / not for the public repo
+Claude outputs/
+Presentazione/
+thesis/receipt-*.txt
+thesis/Giovanni_Brusco_Tesi_Magistrale.pdf
