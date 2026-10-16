@@ -22,7 +22,7 @@
 
 ## 📌 TL;DR
 
-Bitcoin options are structurally expensive: implied volatility (Deribit DVOL) exceeded 30-day realized volatility on **93% of trading days** (Jun 2021 – Sep 2024), with an average spread of **+16.2 vol points**, roughly 4× the equity-index VRP.
+Bitcoin options are structurally expensive: implied volatility (Deribit DVOL) exceeded 30-day realized volatility (Parkinson) on **74% of trading days** (Jun 2021 – Sep 2024), with an average spread of **+6.2 vol points** (+7.4 against the realized vol of the following 30 days), roughly double the 3–4 points historically seen on the S&P 500.
 
 This project harvests that premium with the **simplest strategy that survived a systematic elimination process**: sell the highest-vega delta-neutral option each day, hedge with quarterly futures, exit at 50% premium capture or DTE ≤ 5.
 
@@ -37,12 +37,13 @@ This project harvests that premium with the **simplest strategy that survived a 
 | Period           | Jun 2021 – Sep 2023 | Oct 2023 – Sep 2024 | Jan 2010 – Dec 2023  |
 | Trades           | 35                  | 10                  | 147                  |
 | Win rate         | 65.7%               | 60.0%               | 66.0%                |
-| **Sharpe**       | **1.75**            | **1.52**            | 0.79                 |
+| **Sharpe** (per trade, annualized) | **1.75** | **1.52** | 0.79          |
+| Sharpe (monthly MTM) | 1.29              | 1.16                | 0.71                 |
 | Return (moderate)| +19.3%              | +7.0%               | +9.1%                |
 | Max DD (MTM)     | −10.3%              | −2.3%               | −2.3%                |
 | t-test (p, 1-sided) | 0.007            | 0.091               | n/a                  |
 
-> 💪 The in-sample period **includes the 2022 bear market** (BTC −55% in a single quarter). Bootstrap 95% CI for IS Sharpe: [0.72, 2.73], P(Sharpe > 1) = 93%. Sharpe is invariant across all sizing configurations.
+> 💪 The in-sample period **includes the 2022 bear market** (BTC −55% in a single quarter). Bootstrap 95% CI for IS Sharpe: [0.72, 2.73], P(Sharpe > 1) = 93%. The per-trade Sharpe is invariant across all sizing configurations. The monthly mark-to-market Sharpe also captures the swings while a position is open, so it is the more conservative figure.
 
 <div align="center">
 <img src="docs/images/equity_curve.png" width="850" alt="Equity curve"/>
@@ -186,6 +187,14 @@ Raw option data (~5 GB) is **not** included:
 ## 🎓 Academic Context
 
 This repository accompanies the MSc Finance thesis *"Il Volatility Risk Premium su Bitcoin: origini strutturali e strategie di raccolta tramite opzioni delta-neutrali"* (Università Cattolica del Sacro Cuore, Milan). The full LaTeX source lives in [`thesis/`](thesis/); every number in the thesis is reproducible from the code in this repo (the raw data must be downloaded separately, see [Data](#-data)).
+
+## 📝 Errata
+
+Errors found in the thesis after submission. The code and the figures in this README are corrected; the thesis files in [`thesis/`](thesis/) are left as defended.
+
+- **VRP size (Ch. 1, 3, 10 and Figure 1.1).** The 30-day Parkinson realized vol was annualized with √252 instead of √365. Bitcoin trades every day of the year and DVOL is quoted on a 365-day basis, so realized vol was understated by about 17%. Corrected: IV > RV on **74%** of days (not 93%), average spread **+6.2** vol points (not +16.2), about twice the S&P 500 premium rather than four times. The premium is smaller but still clearly positive. Backtest results, Sharpe ratios, drawdowns and the regime correlations in Ch. 4 do not use this number and are unaffected (a constant scale factor does not change a correlation).
+- **Out-of-sample win rate (Tables in Ch. 5 and 7).** 60.0% (6 winning trades out of 10), not 70.0%.
+- **Sharpe ratio.** The thesis reports only the per-trade Sharpe (1.75 IS). On monthly mark-to-market returns it is 1.29 IS and 1.16 OOS; both are now shown above.
 
 ## ⚠️ Disclaimer
 

@@ -97,7 +97,8 @@ def fig1_vrp():
     # Parkinson 30d annualized (%)
     ohlc["lnhl2"] = (np.log(ohlc["high"] / ohlc["low"])) ** 2
     park_var = ohlc["lnhl2"].rolling(30).mean() / (4 * np.log(2))
-    ohlc["park_rv30"] = np.sqrt(park_var * 252) * 100.0
+    # BTC trades 365 days/year: annualize on the same calendar basis as DVOL
+    ohlc["park_rv30"] = np.sqrt(park_var * 365) * 100.0
 
     df = ohlc[["date", "park_rv30"]].merge(
         dvol[["date", "dvol_close"]], on="date", how="inner"
