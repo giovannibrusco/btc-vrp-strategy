@@ -199,3 +199,7 @@ Errors found in the thesis after submission. The code and the figures in this RE
 ## ⚠️ Disclaimer
 
 This project is for **educational and research purposes only**. It is not financial advice. Past performance does not guarantee future results. Options trading involves substantial risk of loss. The author is not responsible for any trading decisions based on this research.
+
+## ©️ Copyright
+
+© 2026 Giovanni Brusco. All rights reserved. The code and materials are published for reading and evaluation; no license is granted to copy, modify or redistribute them without written permission.
